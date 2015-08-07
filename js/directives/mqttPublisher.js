@@ -37,8 +37,8 @@ angular.module('Mqtt.Controls')
           scope.$apply();
         };
         if (attributes.host && attributes.host.length) {
-          scope.connect(attributes.host, parseInt(attributes.port), attributes.user, attributes.password, attributes.useSsl == 'true', attributes.topic, attributes.clientId, callback);
-        } else if (mqttPanelController != undefined) {
+          scope.connect(attributes.host, parseInt(attributes.port), attributes.user, attributes.password, attributes.useSsl === 'true', attributes.topic, attributes.clientId, callback);
+        } else if (mqttPanelController !== undefined) {
           scope.$on('ready-to-connect', function(event, arg) {
             mqttPanelController.connect(attributes.topic, callback);
             // overwrite send message with call to panel

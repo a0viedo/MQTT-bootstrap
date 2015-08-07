@@ -34,19 +34,19 @@ angular.module('Mqtt.Controls').directive('mqttOnOffSwitch', function() {
     link: function(scope, element, attributes, mqttPanelController) {
       var callback = function(message) {
         var tmp = message.payloadString;
-        if (attributes.transform != undefined && window[attributes.transform] != undefined) {
+        if (attributes.transform !== undefined && window[attributes.transform] !== undefined) {
           tmp = window[attributes.transform](tmp);
         }
-        document.getElementById(scope.uniqueId).checked = tmp == 'on';
+        document.getElementById(scope.uniqueId).checked = tmp === 'on';
         scope.$apply();
       };
       scope.topic = attributes.topic;
       if (attributes.host && attributes.host.length) {
         scope.connect(attributes.host, parseInt(attributes.port),
           attributes.user, attributes.password,
-          attributes.useSsl == 'true', attributes.topic,
+          attributes.useSsl === 'true', attributes.topic,
           attributes.clientId, callback);
-      } else if (mqttPanelController != undefined) {
+      } else if (mqttPanelController !== undefined) {
         scope.$on('ready-to-connect', function(event, arg) {
           mqttPanelController.connect(attributes.topic, callback);
           // overwrite send message with call to panel

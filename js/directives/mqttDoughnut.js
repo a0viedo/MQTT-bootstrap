@@ -30,10 +30,10 @@ angular.module('Mqtt.Controls')
           }
           var ctx = document.getElementById(scope.uniqueId)
             .getContext('2d');
-          if (max == undefined) {
+          if (max === undefined) {
             max = parseInt(tmp) * 1.2;
           }
-          if (scope.chart == undefined) {
+          if (scope.chart === undefined) {
             scope.chart = new Chart(ctx)
               .Doughnut([{
                 value: tmp,
@@ -54,11 +54,11 @@ angular.module('Mqtt.Controls')
             var emptyInd = -1;
             for (var x = 0; x < scope.chart.segments.length; x++) {
               var seg = scope.chart.segments[x];
-              if (seg.label == nm) {
+              if (seg.label === nm) {
                 seg.value = tmp;
                 found = true;
               }
-              if (seg.label != 'empty') {
+              if (seg.label !== 'empty') {
                 sum += scope.chart.segments[x].value;
               } else {
                 emptyInd = x;
@@ -79,8 +79,8 @@ angular.module('Mqtt.Controls')
           scope.$apply();
         };
         if (attributes.host && attributes.host.length) {
-          scope.connect(attributes.host, parseInt(attributes.port), attributes.user, attributes.password, attributes.useSsl == 'true', attributes.topic, attributes.clientId, callback);
-        } else if (mqttPanelController != undefined) {
+          scope.connect(attributes.host, parseInt(attributes.port), attributes.user, attributes.password, attributes.useSsl === 'true', attributes.topic, attributes.clientId, callback);
+        } else if (mqttPanelController !== undefined) {
           scope.$on('ready-to-connect', function(event, arg) {
             mqttPanelController.connect(attributes.topic, callback);
           });

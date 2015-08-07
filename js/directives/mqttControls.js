@@ -50,7 +50,7 @@ angular.module('Mqtt.Controls', ['Mqtt.Services'])
         scope.port = parseInt(attributes.port);
         scope.user = attributes.user;
         scope.pass = attributes.password;
-        scope.useSSL = attributes.useSsl == 'true';
+        scope.useSSL = attributes.useSsl === 'true';
         scope.clientId = attributes.clientId;
         ctrl.ready();
       },

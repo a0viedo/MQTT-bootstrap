@@ -31,7 +31,7 @@ angular.module('Mqtt.Controls')
           if (nm.length > 40) nm = nm.substring(0, 40) + '...';
 
 
-          if (scope.chart == undefined) {
+          if (scope.chart === undefined) {
             // get chart
             var ctx = document.getElementById(scope.uniqueId)
               .getContext('2d'); // new chart, create it
@@ -54,7 +54,7 @@ angular.module('Mqtt.Controls')
             var found = false;
             for (var x = 0; x < scope.chart.datasets[0].bars.length; x++) {
               var bar = scope.chart.datasets[0].bars[x];
-              if (bar.label == nm) {
+              if (bar.label === nm) {
                 found = true;
                 bar.value = tmp;
               }
@@ -68,8 +68,8 @@ angular.module('Mqtt.Controls')
         };
 
         if (attributes.host && attributes.host.length) {
-          scope.connect(attributes.host, parseInt(attributes.port), attributes.user, attributes.password, attributes.useSsl == 'true', attributes.topic, attributes.clientId, callback);
-        } else if (mqttPanelController != undefined) {
+          scope.connect(attributes.host, parseInt(attributes.port), attributes.user, attributes.password, attributes.useSsl === 'true', attributes.topic, attributes.clientId, callback);
+        } else if (mqttPanelController !== undefined) {
           scope.$on('ready-to-connect', function(event, arg) {
             mqttPanelController.connect(attributes.topic, callback);
           });

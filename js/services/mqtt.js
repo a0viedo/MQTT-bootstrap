@@ -10,12 +10,12 @@ angular.module("Mqtt.Services", [])
     // using named parameters because 
     mqttObj.connect = function(host, port, user, pass, useSSL, clientId) {
       var retry;
-      if (clientId == undefined) {
+      if (clientId === undefined) {
         clientId = guid();
       }
       var key = getHashKey(host, port, user, pass, useSSL);
       // remember to deal with current attempted connections
-      if (connections[key] == undefined && currentAttempts[key] == undefined) {
+      if (connections[key] === undefined && currentAttempts[key] === undefined) {
         // Create a client instance
         var client = new Paho.MQTT.Client(host, port, clientId);
         currentAttempts[key] = client;
@@ -34,7 +34,7 @@ angular.module("Mqtt.Services", [])
           console.log("onMessageArrived:" + message.payloadString);
           var newKey = key + "||" + message.destinationName;
           var subs = subscriptions[newKey];
-          if (subs != undefined) {
+          if (subs !== undefined) {
             for (var sub = 0; sub < subs.length; sub++) {
               subs[sub](message);
             }
@@ -51,14 +51,14 @@ angular.module("Mqtt.Services", [])
             connections[key] = client;
             currentAttempts[key] = undefined;
             var ts = toSubscribe[key];
-            if (ts != undefined) {
+            if (ts !== undefined) {
               for (var x = 0; x < ts.length; x++) {
                 mqttObj.subscribe(ts[x].topic, ts[x].callback, host, port, user, pass, useSSL, clientId);
               }
               toSubscribe[key] = [];
             }
             var tse = toSend[key];
-            if (tse != undefined) {
+            if (tse !== undefined) {
               for (var x = 0; x < tse.length; x++) {
                 mqttObj.sendMessage(tse[x].msg, tse[x].topic, host, port, user, pass, useSSL);
               }
@@ -81,8 +81,8 @@ angular.module("Mqtt.Services", [])
     mqttObj.subscribe = function(topic, callback, host, port, user, pass, useSSL, clientId) {
       var key = getHashKey(host, port, user, pass, useSSL)
       var client = connections[key];
-      if (client == undefined) {
-        if (toSubscribe[key] == undefined) {
+      if (client === undefined) {
+        if (toSubscribe[key] === undefined) {
           toSubscribe[key] = [];
         }
         // TODO: add limits to this hashtable
@@ -95,7 +95,7 @@ angular.module("Mqtt.Services", [])
       } else {
         client.subscribe(topic);
         var newKey = key + "||" + topic;
-        if (subscriptions[newKey] == undefined) {
+        if (subscriptions[newKey] === undefined) {
           subscriptions[newKey] = [];
         }
         subscriptions[newKey].push(callback);
@@ -105,9 +105,9 @@ angular.module("Mqtt.Services", [])
     mqttObj.sendMessage = function(msg, topic, host, port, user, pass, useSSL) {
       var key = getHashKey(host, port, user, pass, useSSL)
       var client = connections[key];
-      if (client == undefined) {
+      if (client === undefined) {
         // allow for "offline" sending (queueing)
-        if (toSend[key] == undefined) {
+        if (toSend[key] === undefined) {
           toSend[key] = [];
         }
         // TODO: add limits to this hashtable
